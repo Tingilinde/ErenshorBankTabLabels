@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace BankTabPlugin
 {
-    [BepInPlugin("com.example.banktabnames", "Bank Tab Plugin", "1.0.0")]
+    [BepInPlugin("com.example.BankTabLabels", "Bank Tab Plugin", "1.0.0")]
     public class BankTabPlugin : BaseUnityPlugin
     {
         private ConfigFile customConfig;
@@ -23,7 +23,7 @@ namespace BankTabPlugin
 #if DEBUG
             Logger.LogInfo("Bank Tab Names loaded! You can now better organize your bank mess. <3");
 #endif
-            customConfig = new ConfigFile(Paths.ConfigPath + "/BankTabNames.cfg", true);
+            customConfig = new ConfigFile(Paths.ConfigPath + "/BankTabLabels.cfg", true);
 
             for (int i = 1; i <= 98; i++)
             {
@@ -40,7 +40,7 @@ namespace BankTabPlugin
             }
 
 #if DEBUG
-            Logger.LogInfo("BankTabNames.cfg config loaded.");
+            Logger.LogInfo("BankTabLabels.cfg config loaded.");
 #endif
         }
 
