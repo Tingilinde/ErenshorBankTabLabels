@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/ErenshorBankTabNames/FileContentIndex
+/.vs/ErenshorBankTabNames/v17
+/.vs
+/.git
+/ErenshorBankTabLabels/.vs/ErenshorBankTabLabels
+/ErenshorBankTabLabels/obj/Debug/ErenshorBankTabLabels.csproj.AssemblyReference.cache
+/ErenshorBankTabLabels/obj/Release/ErenshorBankTabLabels.csproj.AssemblyReference.cache
