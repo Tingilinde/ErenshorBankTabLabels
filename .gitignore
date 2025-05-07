@@ -7,3 +7,5 @@
 /.vs
 /.git
 /ErenshorBankTabLabels/.vs/ErenshorBankTabLabels
+/ErenshorBankTabLabels/obj/Debug/ErenshorBankTabLabels.csproj.AssemblyReference.cache
+/ErenshorBankTabLabels/obj/Release/ErenshorBankTabLabels.csproj.AssemblyReference.cache
