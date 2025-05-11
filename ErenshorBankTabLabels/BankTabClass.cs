@@ -2,15 +2,15 @@
 using BepInEx.Configuration;
 using UnityEngine;
 using TMPro;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace BankTabPlugin
 {
-    [BepInPlugin("com.example.BankTabLabels", "Bank Tab Plugin", "1.0.0")]
+    [BepInPlugin("com.Tingilinde.BankTabLabels", "Bank Tab Plugin", "0.5.1")]
     public class BankTabPlugin : BaseUnityPlugin
     {
-        private ConfigFile customConfig;
         private Dictionary<int, ConfigEntry<string>> pageNameConfig = new Dictionary<int, ConfigEntry<string>>();
         private GameObject labelObject = null;
         private int lastPage = -1;
@@ -23,24 +23,26 @@ namespace BankTabPlugin
 #if DEBUG
             Logger.LogInfo("Bank Tab Labels loaded! You can now better organize your bank mess. <3");
 #endif
-            customConfig = new ConfigFile(Paths.ConfigPath + "/BankTabLabels.cfg", true);
-
             for (int i = 1; i <= 98; i++)
             {
                 string description = i == 1
                     ? "Custom names for each bank page. Leave blank for default view. Text will cut/truncated if too long."
                     : "";
 
-                pageNameConfig[i] = customConfig.Bind(
+                pageNameConfig[i] = Config.Bind(
                     "Bank Page Names",
-                    $"PageName_{i}",
+                    $"Bank Page {i}",
                     "",
-                    description
+                    new ConfigDescription(
+                        description,
+                        null,
+                        new ConfigurationManagerAttributes { Order = 99 - i } // Ensures ascending numerical order in Config Manager
+                    )
                 );
             }
 
 #if DEBUG
-            Logger.LogInfo("BankTabLabels.cfg config loaded.");
+            Logger.LogInfo("Default BepInEx config loaded.");
 #endif
         }
 
@@ -55,18 +57,15 @@ namespace BankTabPlugin
             {
                 float waitTime = 0.5f;
 
-                // Attempt to find the bank object if we don't have it cached
                 if (bankObject == null)
                 {
                     bankObject = GameObject.Find("Bank");
                 }
 
-                // If the bank is open, switch to faster checks
                 if (bankObject != null && bankObject.activeInHierarchy)
                 {
-                    waitTime = 0.1f; // more responsive checking
+                    waitTime = 0.1f;
 
-                    // Cache numberTMP if needed
                     if (numberTMP == null)
                     {
                         var tmps = bankObject.GetComponentsInChildren<TextMeshProUGUI>(true);
@@ -82,7 +81,6 @@ namespace BankTabPlugin
                         }
                     }
 
-                    // If everything is ready, parse and update label if needed
                     if (numberTMP != null &&
                         int.TryParse(numberTMP.text.Trim(), out int currentPage) &&
                         currentPage != lastPage)
@@ -139,6 +137,18 @@ namespace BankTabPlugin
 #if DEBUG
             Logger.LogInfo($"✅ Updated label to: '{labelTMP.text}' for page {currentPage}");
 #endif
+        }
+
+        // Internal helper class to control how settings are shown in Config Manager
+        private sealed class ConfigurationManagerAttributes
+        {
+            public bool? ShowRangeAsPercent;
+            public bool? IsAdvanced;
+            public int? Order;
+            public bool? Browsable;
+            public string Category;
+            public string DispName;
+            public Action<ConfigEntryBase> CustomDrawer;
         }
     }
 }
