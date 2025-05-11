@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace BankTabPlugin
 {
-    [BepInPlugin("com.Tingilinde.BankTabLabels", "Bank Tab Plugin", "0.5.1")]
+    [BepInPlugin("com.Tingilinde.BankTabLabels", "Bank Tab Plugin", "0.6")]
     public class BankTabPlugin : BaseUnityPlugin
     {
         private Dictionary<int, ConfigEntry<string>> pageNameConfig = new Dictionary<int, ConfigEntry<string>>();
